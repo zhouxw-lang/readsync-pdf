@@ -1,11 +1,13 @@
 app.addToolButton({cName: "SavePos", cLabel: "SavePosition", cEnable: "event.rc = (app.doc != null);", cExec: "savePos();" });
 app.addToolButton({cName: "RestorePos", cLabel: "RestoreLatestPosition", cEnable: "event.rc = (app.doc != null);", cExec: "restorePos();" });
-app.addToolButton({cName: "CountPos", cLabel: "CountPositions", cEnable: "event.rc = (app.doc != null);", cExec: "countPos();" });
+app.addToolButton({cName: "ListPos", cLabel: "ListSavedPositions", cEnable: "event.rc = (app.doc != null);", cExec: "listPos();" });
 app.addToolButton({cName: "ClearPos", cLabel: "ClearAllPositions", cEnable: "event.rc = (app.doc != null);", cExec: "clearPos();" });
 
 const APP_ID = "LangCB3K_RDSync";
 const APP_VERSION = "V1";
 const APP_STR = APP_ID + "-" + APP_VERSION;
+
+const LIST_MAX_NUM = 20;
 
 var savePos = app.trustedFunction( function() {
 
@@ -41,7 +43,6 @@ var savePos = app.trustedFunction( function() {
 
 });
 
-
 var restorePos = app.trustedFunction( function() {
 
 	app.beginPriv();
@@ -63,27 +64,41 @@ var restorePos = app.trustedFunction( function() {
 	
 	if (mostRecentState) {
 		this.viewState = eval(mostRecentState);
+	} else {
+		app.alert("There is no reading position in this document.");
 	}
 
 	app.endPriv();
 });
 
-var countPos = app.trustedFunction( function() {
+var listPos = app.trustedFunction( function() {
 
 	app.beginPriv();
 
 	this.syncAnnotScan();
 	var annots = this.getAnnots({});
-	var count = 0;
+	var relevantAnnots = [];
 	if (annots) {
 		for (var i = 0; i < annots.length; i++) {
 			if (APP_STR === annots[i].author) {
-				count++;
+				relevantAnnots.push(annots[i]);
 			}
 		}
 	}
 	
-	app.alert("The number of reading positions is: " + count);
+	var msg;
+	if(relevantAnnots.length > 0) {
+		msg = "The number of reading positions is: " + relevantAnnots.length + "\n\n" + "Here is a list of most recent (" + LIST_MAX_NUM + " max) reading positions:\n";
+		
+		relevantAnnots.sort(function compare(a, b) {return b.modDate.getTime() - a.modDate.getTime()});
+		var total = Math.min(LIST_MAX_NUM, relevantAnnots.length);
+		for (var i = 0; i < total; i++) {
+			msg += "  Time: " + relevantAnnots[i].modDate.toLocaleString() + "\tPage: " + (relevantAnnots[i].page + 1) + "\n";
+		}
+	} else {
+		msg = "There is no reading position in this document.";
+	}
+	app.alert(msg, 3);
 
 	app.endPriv();
 });
