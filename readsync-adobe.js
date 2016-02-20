@@ -33,11 +33,11 @@ var savePos = app.trustedFunction( function() {
 		hidden: true
 	});
 	
-	this.saveAs({
-		cPath: this.path,
-		bPromptToOverwrite: false,
-		cFS: ""
-	});
+	try {
+		this.saveAs(this.path);
+	} catch(e) {
+		app.alert("Reading position was created but auto-save failed. You might need to save the document manually.");
+	}
 
 	app.endPriv();
 
@@ -122,11 +122,11 @@ var clearPos = app.trustedFunction( function() {
 		}
 	}
 	
-	this.saveAs({
-		cPath: this.path,
-		bPromptToOverwrite: false,
-		cFS: ""
-	});
+	try {
+		this.saveAs(this.path);
+	} catch(e) {
+		app.alert("Reading positions were cleared but auto-save failed. You might need to save the document manually.");
+	}
 
 	app.endPriv();
 });
