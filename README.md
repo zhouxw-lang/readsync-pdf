@@ -7,6 +7,7 @@ Supported PDF readers:
 * To be added.
 
 ## Install
+### For Adobe Acrobat
 Put `readsync-adobe.js` under JavaScripts folder folder, here are some exapmles:
 
 |          Reader         |       OS       |                             Directory                             |
