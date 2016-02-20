@@ -1,5 +1,5 @@
 # readsync-pdf
-Plug-ins for saving and restoring reading positions for PDF files. Reading positions are stored in PDF files so together with a Sync application (Google Drive, OneDrive, etc) they can be synced across devices. 
+Plug-ins for saving and restoring reading positions for PDF files. Reading positions are stored in PDF files so together with a Sync application (Google Drive, OneDrive, etc.) they can be synced across devices. 
 
 Supported PDF readers:
 
@@ -8,7 +8,7 @@ Supported PDF readers:
 
 ## Install
 ### For Adobe Acrobat
-Put `readsync-adobe.js` under JavaScripts folder folder, here are some exapmles:
+Put `readsync-adobe.js` under JavaScripts folder. Here are some exapmles:
 
 |          Reader         |       OS       |                             Directory                             |
 |:-----------------------:|:--------------:|:-----------------------------------------------------------------:|
