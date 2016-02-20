@@ -2,6 +2,7 @@
 Plug-ins for saving and restoring reading positions for PDF files. Reading positions are stored in PDF files so together with a Sync applicatoin (Google Drive, OneDrive, etc) they can be synced across devices. 
 
 Supported PDF readers:
+
 * Adobe Acrobat Standard/Pro/Reader 7.0 or later.
 * To be added.
 
